@@ -64,7 +64,7 @@ class EventsServiceImplTest {
         public void returns_created_event() {
             Event actual = eventsService.addEvent(NOT_EXIST_EVENT_TITLE, DEFAULT_DATE_START,
                     DEFAULT_DATE_EXPIRATION);
-            verify(eventsRepository).save(NOT_EXIST_EVENT);
+            вы
             assertNotNull(actual);
         }
 
