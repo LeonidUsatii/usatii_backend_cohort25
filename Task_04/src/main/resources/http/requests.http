@@ -1,0 +1,14 @@
+### Получение пользователей
+
+GET localhost:8080/events
+
+### Добавление пользовтаеля
+
+POST localhost:8080/events
+Content-Type: application/json
+
+{
+  "title": "Home Work",
+  "startDate": "2023-09-09",
+  "expirationDate": "2023-09-10"
+}
