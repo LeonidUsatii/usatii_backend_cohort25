@@ -34,23 +34,26 @@ public class EventsController {
     public EventDto addEvent(@RequestBody NewEventDto newEvent)
                             {
         System.out.println(newEvent);
+
+        LocalDate startDate = getDate(newEvent.getStartDate() + "");
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 //        LocalDate startDate = LocalDate.parse(newEvent.getStartDate() + "", formatter);
 //        LocalDate expirationDate = LocalDate.parse(newEvent.getExpirationDate() + "", formatter);
-                                //System.out.println(startDate);
 
 
-        String[] parsed = (newEvent.getStartDate() + "") .split("-");
-        int year = Integer.parseInt(parsed[0]);
-        int month = Integer.parseInt(parsed[1]);
-        int day = Integer.parseInt(parsed[2]);
-        LocalDate startDate = LocalDate.of(year, month, day);
 
-        parsed = (newEvent.getExpirationDate() + "").split("-");
-        year = Integer.parseInt(parsed[0]);
-        month = Integer.parseInt(parsed[1]);
-        day = Integer.parseInt(parsed[2]);
-        LocalDate expirationDate = LocalDate.of(year, month, day);
+//        String[] parsed = (newEvent.getStartDate() + "") .split("-");
+//        int year = Integer.parseInt(parsed[0]);
+//        int month = Integer.parseInt(parsed[1]);
+//        int day = Integer.parseInt(parsed[2]);
+//        LocalDate startDate = LocalDate.of(year, month, day);
+//
+//        parsed = (newEvent.getExpirationDate() + "").split("-");
+//        year = Integer.parseInt(parsed[0]);
+//        month = Integer.parseInt(parsed[1]);
+//        day = Integer.parseInt(parsed[2]);
+//        LocalDate expirationDate = LocalDate.of(year, month, day);
+        LocalDate expirationDate = getDate(newEvent.getExpirationDate() + "");
 
         NewEventDto event = new NewEventDto(newEvent.getTitle(), startDate, expirationDate);
         return eventsService.addEvent(event);
@@ -65,6 +68,12 @@ public class EventsController {
         return eventsService.getAllEvents();
     }
 
-
+    public static LocalDate getDate(String date) {
+        String[] parsed = date.split("-");
+        int year = Integer.parseInt(parsed[0]);
+        int month = Integer.parseInt(parsed[1]);
+        int day = Integer.parseInt(parsed[2]);
+        return LocalDate.of(year, month, day);
+    }
 
 }

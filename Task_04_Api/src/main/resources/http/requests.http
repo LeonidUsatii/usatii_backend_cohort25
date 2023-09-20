@@ -1,0 +1,38 @@
+
+### Добавление пользовтаеля
+
+POST localhost:8080/api/events
+Content-Type: application/json
+
+{
+  "title": "Home Work4",
+  "startDate": "2023-09-09",
+  "expirationDate": "2023-09-10"
+}
+
+### Получение пользователей
+
+GET localhost:8080/api/events
+
+### Получение одного пользователя
+
+GET localhost:8080/api/events/4
+
+### Обновление пользователя
+
+PUT localhost:8080/api/events/1
+Content-Type: application/json
+
+{
+  "startDate": "2023-09-12",
+  "expirationDate": "2023-09-20"
+}
+
+### Удаление пользователя
+
+DELETE http://localhost:8080/api/events/5
+
+
+
+
+
