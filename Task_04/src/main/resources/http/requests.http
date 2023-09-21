@@ -1,14 +1,38 @@
-### Получение пользователей
 
-GET localhost:8080/events
+### Добавление события
 
-### Добавление пользовтаеля
-
-POST localhost:8080/events
+POST localhost:8080/api/events
 Content-Type: application/json
 
 {
-  "title": "Home Work2",
+  "title": "Home Work4",
   "startDate": "2023-09-09",
   "expirationDate": "2023-09-10"
 }
+
+### Получение событий
+
+GET localhost:8080/api/events
+
+### Получение одного события
+
+GET localhost:8080/api/events/2
+
+### Обновление события
+
+PUT localhost:8080/api/events/1
+Content-Type: application/json
+
+{
+  "startDate": "2023-09-12",
+  "expirationDate": "2023-09-20"
+}
+
+### Удаление события
+
+DELETE http://localhost:8080/api/events/2
+
+
+
+
+
