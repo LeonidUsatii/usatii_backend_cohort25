@@ -4,13 +4,15 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "events")
+@EqualsAndHashCode(exclude = "place")
 public class Event {
     public enum State {
        EXPECTATION, STARTED, COMPLETED
@@ -31,6 +33,21 @@ public class Event {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
     private State state;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "events_participants",
+            joinColumns =
+            @JoinColumn(name = "event_id", nullable = false, referencedColumnName = "id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "participant_id", nullable = false, referencedColumnName = "id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"event_id", "participant_id"})
+    )
+    private Set<Participant> participants;
+
+    @ManyToOne
+    @JoinColumn(name = "place_id", nullable = false)
+    private Place place;
 
     @Override
     public String toString() {

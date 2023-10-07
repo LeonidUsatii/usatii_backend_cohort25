@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -23,4 +24,11 @@ public class Participant {
 
     @Column(nullable = false, length = 20)
     private String lastName;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @ManyToMany(mappedBy = "participants")
+    private Set<Event> events;
+
 }
