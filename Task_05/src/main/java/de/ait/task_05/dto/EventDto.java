@@ -29,17 +29,22 @@ public class EventDto {
     private String expirationDate;
     @Schema(description = "статус события - EXPECTATION, STARTED, COMPLETED", example = "STARTED")
     private String state;
+    @Schema(description = "идентификатор площадки", example = "1")
+    private Long PlaceId;
 
     public static EventDto from(Event event) {
-        return EventDto.builder()
+        EventDto result = EventDto.builder()
                 .id(event.getId())
                 .title(event.getTitle())
                 .startDate(event.getStartDate().toString())
                 .expirationDate(event.getExpirationDate().toString())
                 .state(event.getState().toString())
                 .build();
+        if (event.getPlace() != null) {
+            result.setPlaceId(event.getPlace().getId());
+        }
+        return result;
     }
-
     public static List<EventDto> from(Set<Event> events) {
 
         return events.stream()

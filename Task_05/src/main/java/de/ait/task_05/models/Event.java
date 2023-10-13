@@ -13,6 +13,7 @@ import java.util.Set;
 @Builder
 @Entity
 @EqualsAndHashCode(exclude = "place")
+
 public class Event {
     public enum State {
        EXPECTATION, STARTED, COMPLETED
@@ -34,19 +35,12 @@ public class Event {
     @Enumerated(value = EnumType.STRING)
     private State state;
 
-    @ManyToMany()
-    @JoinTable(
-            name = "events_participants",
-            joinColumns =
-            @JoinColumn(name = "event_id", nullable = false, referencedColumnName = "id"),
-            inverseJoinColumns =
-            @JoinColumn(name = "participant_id", nullable = false, referencedColumnName = "id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"event_id", "participant_id"})
-    )
+    @ManyToMany(mappedBy = "events")
     private Set<Participant> participants;
 
     @ManyToOne
-    @JoinColumn(name = "place_id", nullable = false)
+    @JoinColumn(name = "place_id")
+    @ToString.Exclude
     private Place place;
 
     @Override

@@ -1,6 +1,7 @@
 package de.ait.task_05.controllers;
 
 import de.ait.task_05.dto.*;
+import de.ait.task_05.services.EventsServices;
 import de.ait.task_05.services.PlacesServices;
 import de.ait.task_05.validation.dto.ValidationErrorsDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,6 +28,8 @@ import java.util.List;
 })
 public class PlacesController {
     private final PlacesServices placesServices;
+
+    private final EventsServices eventsServices;
 
     @Operation(summary = "Создание площадки", description = "Доступно менеджеру по организации мероприятий")
     @ApiResponses(value = {
@@ -121,5 +124,33 @@ public class PlacesController {
         return ResponseEntity
                 .ok(placesServices.getEventsOfPlace(placeId));
     }
+
+    @DeleteMapping("/{place-id}/events/{event-id}")
+    public ResponseEntity<EventDto> deletePlaceFromEvent(@PathVariable("place-id") Long placeId,
+                                                            @PathVariable("event-id") Long eventId) {
+        return ResponseEntity
+                .ok(placesServices.deleteEventFromPlace(placeId, eventId));
+    }
+
+    @PutMapping("/{place-id}/events/{event-id}")
+    public ResponseEntity<EventDto> updateParticipantFromEvent(@PathVariable("place-id") Long placeId,
+                                                           @PathVariable("event-id") Long eventId,
+                                                           @RequestBody @Valid UpdateEventDto updateEvent) {
+        return ResponseEntity
+                .ok(placesServices.updateEventInPlace(placeId, eventId, updateEvent));
+    }
+
+    @PostMapping("/{event-id}/participants")
+    public ResponseEntity<List<ParticipantDto>> addParticipantToEvent(@PathVariable("event-id") Long eventId,
+                                                            @RequestBody ParticipantToEventDto participantData) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(eventsServices.addParticipantToEvent(eventId, participantData));
+    }
+
+    @GetMapping("/{event-id}/participants")
+    public ResponseEntity<List<ParticipantDto>> getParticipantOfEvent(@PathVariable("event-id") Long eventId) {
+        return ResponseEntity.ok(eventsServices.getParticipantOfEvent(eventId));
+    }
+
 
 }

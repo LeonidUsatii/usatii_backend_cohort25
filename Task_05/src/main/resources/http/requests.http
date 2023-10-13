@@ -14,7 +14,7 @@ POST http://localhost:8080/api/places
 Content-Type: application/json
 
 {
-  "title": "Площадка_2",
+  "title": "Площадка_9",
   "address": "Адрес_2"
 }
 
@@ -62,6 +62,56 @@ Content-Type: application/json
   "state": "STARTED"
 }
 
+### Добавление существующего события на  площадку
+
+POST localhost:8080/api/places/1/events
+Content-Type: application/json
+
+{
+  "existsEventId": 1
+}
+
 ### Получение всех событий на  площадке
 
 GET http://localhost:8080/api/places/1/events
+
+### Удаление события из площадки
+
+DELETE localhost:8080/api/places/1/events/1
+
+### Обновление урока в курсе
+
+PUT localhost:8080/api/places/1/events/1
+Content-Type: application/json
+
+{
+  "title": "Событие_8",
+  "startDate": "2024-03-02",
+  "expirationDate": "2024-03-04",
+  "state": "EXPECTATION"
+}
+
+### Добавление участника на площадку
+
+POST localhost:8080/api/places/1/participants
+Content-Type: application/json
+
+{
+  "participantId": 1
+}
+
+### Регистрация участника
+
+POST localhost:8080/api/participants
+Content-Type: application/json
+
+{
+  "firstName": "Leonid",
+  "lastName": "Usatii",
+  "email": "Leonid@gmail.com"
+
+}
+
+### Получение всех участников события
+
+GET localhost:8080/api/places/1/participants

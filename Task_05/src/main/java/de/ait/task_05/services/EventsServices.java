@@ -1,9 +1,6 @@
 package de.ait.task_05.services;
 
-import de.ait.task_05.dto.EventDto;
-import de.ait.task_05.dto.NewEventDto;
-import de.ait.task_05.dto.NewPlaceDto;
-import de.ait.task_05.dto.PlaceDto;
+import de.ait.task_05.dto.*;
 
 import java.util.List;
 
@@ -17,4 +14,8 @@ public interface EventsServices {
     EventDto addPlaceToEvent(Long placeId, NewEventDto newEvent);
 
     List<EventDto> getEventsOfPlace(Long eventId);
+
+    List<ParticipantDto> addParticipantToEvent(Long eventId, ParticipantToEventDto participantData);
+
+    List<ParticipantDto> getParticipantOfEvent(Long eventId);
 }

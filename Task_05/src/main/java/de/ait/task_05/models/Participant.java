@@ -1,9 +1,6 @@
 package de.ait.task_05.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -14,6 +11,7 @@ import java.util.Set;
 @Builder
 @Entity
 @Table(name = "participants")
+@EqualsAndHashCode(exclude = "events")
 public class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +26,15 @@ public class Participant {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @ManyToMany(mappedBy = "participants")
+    @ManyToMany
+    @JoinTable(
+            name = "events_participants",
+            joinColumns =
+            @JoinColumn(name = "participant_id", nullable = false, referencedColumnName = "id"),
+            inverseJoinColumns =
+            @JoinColumn(name = "event_id", nullable = false, referencedColumnName = "id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"participant_id", "event_id"})
+    )
     private Set<Event> events;
 
 }
