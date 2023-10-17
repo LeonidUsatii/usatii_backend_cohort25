@@ -1,19 +1,16 @@
-package de.ait.ec.security.details;
+package de.ait.task_05.security.details;
 
-import de.ait.ec.models.User;
-import de.ait.ec.repositories.UsersRepository;
+import de.ait.task_05.models.User;
+import de.ait.task_05.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- * 10/13/2023
- * education-center
- *
- * @author Marsel Sidikov (AIT TR)
- */
+import java.util.Optional;
+
+
 @Service
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -21,7 +18,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private final UsersRepository usersRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        /*
 
         Optional<User> userOptional = usersRepository.findByEmail(email); // находим пользователя по email-у
 
@@ -34,11 +30,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(("User with email <" + email + "> not found"));
         }
 
-         */
 
-        User user = usersRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User with email <" + email + "> not found"));
-
-        return new AuthenticatedUser(user);
+//        User user = usersRepository.findByEmail(email)
+//                .orElseThrow(() -> new UsernameNotFoundException("User with email <" + email + "> not found"));
+//
+//        return new AuthenticatedUser(user);
     }
 }

@@ -20,20 +20,7 @@ public class AuthenticatedUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-
-        //в нашем случае права пользователя определяются его ролью в приложении (например, USER, ADMIN, MANAGER, TEACHER, STUDENT и т.д.)
-        //нужно взять роль пользователя как обычную строку
-        String role = user.getRole().toString();
-        // оборачиваем ее в объект Spring Security
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role);
-        // Spring Security предполагает, что у пользователя может быть много прав (много ролей)
-        // поэтому он просит коллекцию
-        List<GrantedAuthority> authorities = new ArrayList<>(); // создаем список
-        authorities.add(authority); // кладем туда нашу роль
-        return authorities; // возвращаем как результат
-
-        //return Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()));
-
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()));
     }
 
     @Override
@@ -64,5 +51,9 @@ public class AuthenticatedUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return this.user.getId();
     }
 }

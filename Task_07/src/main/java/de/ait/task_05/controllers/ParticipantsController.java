@@ -1,9 +1,11 @@
 package de.ait.task_05.controllers;
 
-import de.ait.task_05.dto.NewUserDto;
-import de.ait.task_05.dto.StandardResponseDto;
-import de.ait.task_05.dto.UserDto;
-import de.ait.task_05.services.UsersService;
+import de.ait.task_05.dto.NewParticipantDto;
+import de.ait.task_05.dto.NewPlaceDto;
+import de.ait.task_05.dto.ParticipantDto;
+import de.ait.task_05.dto.PlaceDto;
+import de.ait.task_05.models.Participant;
+import de.ait.task_05.services.ParticipantsServices;
 import de.ait.task_05.validation.dto.ValidationErrorsDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -23,34 +25,28 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
-@Tags(
-        @Tag(name = "Users")
-)
 @RestController
-@RequestMapping("/api/users")
-public class UsersController {
-
-    private final UsersService usersService;
-
-    @Operation(summary = "Регистрация пользователя", description = "Доступно всем. По умолчанию роль - USER")
+@RequestMapping("/api/participants")
+@Tags(value = {
+        @Tag(name = "Participants")
+})
+public class ParticipantsController {
+   private  final ParticipantsServices participantsServices;
+    @Operation(summary = "Добавление участника", description = "Доступно менеджеру по организации мероприятий")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",
-                    description = "Пользователь зарегистрирован",
+                    description = "Участник добавлен успешно",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserDto.class))),
+                            schema = @Schema(implementation = PlaceDto.class))),
             @ApiResponse(responseCode = "400",
                     description = "Ошибка валидации",
                     content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ValidationErrorsDto.class))),
-            @ApiResponse(responseCode = "409",
-                    description = "Пользователь с таким email уже есть",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = StandardResponseDto.class))),
+                            schema = @Schema(implementation = ValidationErrorsDto.class)))
     })
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody @Valid NewUserDto newUser) {
+    @PostMapping
+    public ResponseEntity<ParticipantDto> addParticipant(@RequestBody @Valid NewParticipantDto newParticipant) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(usersService.register(newUser));
+                .body(participantsServices.addParticipant(newParticipant));
     }
 }
